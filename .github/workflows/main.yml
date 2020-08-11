@@ -43,7 +43,7 @@ jobs:
       - name: Build docker image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
       - name: Log into registry
-        run: docker login docker.pkg.github.com -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }}
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       - name: Push docker image with version tag
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
