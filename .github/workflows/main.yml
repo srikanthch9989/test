@@ -3,7 +3,7 @@ name: package
 on:
   push:
     # Publish `master` as Docker `latest` image.
-    branches: [master,development]
+    branches: [master]
 
     # Publish `v1.2.3` tags as releases.
     tags: [v*]
@@ -55,7 +55,7 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `alpha` tag convention
-          [ "$VERSION" == "development" ] && VERSION=alpha
+          [ "$VERSION" == "master" ] && VERSION=alpha
       
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
